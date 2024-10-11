@@ -1,0 +1,7 @@
+{
+  "name": "proyecto_hacka",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
