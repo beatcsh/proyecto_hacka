@@ -7,7 +7,7 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Blank</IonTitle>
+          <IonTitle><p className='text-4xl font-bold text-blue-700'>Blank</p></IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
