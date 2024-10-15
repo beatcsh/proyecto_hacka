@@ -1,0 +1,14 @@
+/* src/components/PanicButton.css */
+
+/* Estilo para el botón de pánico */
+.panic-button {
+    margin: 20px; /* Añadir un margen alrededor del botón */
+  }
+  
+  /* Ajustes específicos para dispositivos móviles */
+  @media (max-width: 768px) {
+    .panic-button {
+      margin: 10px; /* Ajustar el margen en pantallas más pequeñas */
+    }
+  }
+  
