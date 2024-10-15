@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react';
-import * as dotenv from 'dotenv';
-dotenv.config();
 
 const mapContainerStyle = {
   width: '100vw',
@@ -14,10 +12,9 @@ const center = {
   lng: -102.2662378,
 };
 
-// Define la interfaz para la zona
 interface Zone {
   location: {
-    coordinates: number[]; // Asegúrate de que coincida con la estructura que devuelve tu API
+    coordinates: number[];
   };
   dangerLevel: string;
   description: string;
@@ -25,25 +22,32 @@ interface Zone {
 
 const Home: React.FC = () => {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || '', // Agrega tu API Key aquí
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '',
   });
 
-  const [zones, setZones] = useState<Zone[]>([]); // Especifica el tipo aquí
+  const [zones, setZones] = useState<Zone[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchDangerZones = async () => {
-      const response = await fetch('http://localhost:3000/zones');
-      if (!response.ok) {
-        throw new Error('Error al obtener zonas peligrosas');
+      try {
+        const response = await fetch('http://localhost:3000/zones');
+        if (!response.ok) {
+          throw new Error('Error al obtener zonas peligrosas');
+        }
+        const data = await response.json();
+        setZones(data);
+      } catch (error) {
+        setError(error.message);
+        console.error(error);
       }
-      const data = await response.json();
-      setZones(data);
     };
 
     fetchDangerZones();
   }, []);
 
   if (!isLoaded) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <IonPage>
