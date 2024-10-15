@@ -12,6 +12,7 @@ const center = {
   lng: -102.2662378,
 };
 
+// Define la interfaz para la zona
 interface Zone {
   location: {
     coordinates: number[];
@@ -26,7 +27,6 @@ const Home: React.FC = () => {
   });
 
   const [zones, setZones] = useState<Zone[]>([]);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchDangerZones = async () => {
@@ -38,7 +38,6 @@ const Home: React.FC = () => {
         const data = await response.json();
         setZones(data);
       } catch (error) {
-        setError(error.message);
         console.error(error);
       }
     };
@@ -47,7 +46,6 @@ const Home: React.FC = () => {
   }, []);
 
   if (!isLoaded) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
 
   return (
     <IonPage>

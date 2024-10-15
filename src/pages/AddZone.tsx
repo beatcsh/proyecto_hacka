@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonInput } from '@ionic/react';
+import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
+import { IonButton, IonInput, IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react';
 
 const mapContainerStyle = {
-  width: '100vw',
-  height: '100vh',
+  width: '100%',
+  height: '400px',
 };
 
 const center = {
@@ -14,39 +14,53 @@ const center = {
 
 const AddZone: React.FC = () => {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'TU_API_KEY', // Agrega tu API Key aquí
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '',
   });
 
-  const [marker, setMarker] = useState<{ lat: number; lng: number } | null>(null);
-  const [dangerLevel, setDangerLevel] = useState('');
-  const [description, setDescription] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [dangerLevel, setDangerLevel] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
 
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
-    setMarker({
-      lat: event.latLng!.lat(),
-      lng: event.latLng!.lng(),
-    });
+    if (event.latLng) {
+      setSelectedLocation({
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng(),
+      });
+    }
   };
 
   const handleSubmit = async () => {
-    if (!marker || !dangerLevel || !description) return;
+    if (selectedLocation) {
+      const zoneData = {
+        location: {
+          type: 'Point',
+          coordinates: [selectedLocation.lng, selectedLocation.lat],
+        },
+        dangerLevel,
+        description,
+      };
 
-    const newZone = {
-      location: { type: 'Point', coordinates: [marker.lng, marker.lat] },
-      dangerLevel,
-      description,
-    };
+      try {
+        const response = await fetch('http://localhost:3000/add-zone', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(zoneData),
+        });
 
-    await fetch('http://localhost:3000/zones', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newZone),
-    });
-
-    // Limpia el formulario
-    setMarker(null);
-    setDangerLevel('');
-    setDescription('');
+        if (!response.ok) {
+          throw new Error('Error al agregar la zona');
+        }
+        // Reset form
+        setDangerLevel('');
+        setDescription('');
+        setSelectedLocation(null);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
   };
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -59,23 +73,29 @@ const AddZone: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <GoogleMap mapContainerStyle={mapContainerStyle} zoom={13} center={center} onClick={handleMapClick}>
-          {marker && <Marker position={marker} />}
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+          zoom={13}
+          center={center}
+          onClick={handleMapClick}
+        >
+          {selectedLocation && (
+            <Marker
+              position={selectedLocation}
+            />
+          )}
         </GoogleMap>
-
-        <IonInput
-          value={dangerLevel}
-          placeholder="Nivel de peligro"
-          onIonChange={(e) => setDangerLevel(e.detail.value!)}
+        <IonInput 
+          value={dangerLevel} 
+          placeholder="Nivel de Peligro" 
+          onIonChange={e => setDangerLevel(e.detail.value!)} 
         />
-        <IonInput
-          value={description}
-          placeholder="Descripción"
-          onIonChange={(e) => setDescription(e.detail.value!)}
+        <IonInput 
+          value={description} 
+          placeholder="Descripción" 
+          onIonChange={e => setDescription(e.detail.value!)} 
         />
-        <IonButton expand="full" onClick={handleSubmit}>
-          Agregar Zona
-        </IonButton>
+        <IonButton onClick={handleSubmit}>Agregar Zona</IonButton>
       </IonContent>
     </IonPage>
   );
