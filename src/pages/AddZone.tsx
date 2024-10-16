@@ -4,7 +4,9 @@ import { IonButton, IonInput, IonPage, IonHeader, IonToolbar, IonTitle, IonConte
 
 const mapContainerStyle = {
   width: '100%',
-  height: '400px',
+  height: '100%',
+  borderRadius: '10px',
+  backgroundColor: 'black'
 };
 
 const center = {
@@ -69,34 +71,42 @@ const AddZone: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Agregar Zona Peligrosa</IonTitle>
+          <IonTitle className='w-full h-[110px] m-3'>
+            <h1 className='p-4 text-2xl font-semibold'>Reportar Zona</h1>
+          </IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          zoom={13}
-          center={center}
-          onClick={handleMapClick}
-        >
-          {selectedLocation && (
-            <Marker
-              position={selectedLocation}
-            />
-          )}
-        </GoogleMap>
-        <IonInput 
-          value={dangerLevel} 
-          placeholder="Nivel de Peligro" 
-          onIonChange={e => setDangerLevel(e.detail.value!)} 
-        />
-        <IonInput 
-          value={description} 
-          placeholder="Descripción" 
-          onIonChange={e => setDescription(e.detail.value!)} 
-        />
-        <IonButton onClick={handleSubmit}>Agregar Zona</IonButton>
+      <IonContent className="ion-no-padding">
+        <div className='w-full h-[280px] p-2 bg-black'>
+          <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            zoom={13}
+            center={center}
+            onClick={handleMapClick}
+          >
+            {selectedLocation && (
+              <Marker
+                position={selectedLocation}
+              />
+            )}
+          </GoogleMap>
+        </div>
       </IonContent>
+      <div className='grid place-items-center h-[210px]'>
+        <IonInput
+          className='border rounded-lg p-2 text-sm bg-black'
+          value={dangerLevel}
+          placeholder="Nivel de Peligro"
+          onIonChange={e => setDangerLevel(e.detail.value!)}
+        />
+        <IonInput
+          className='border rounded-lg p-2 text-sm bg-black'
+          value={description}
+          placeholder="Descripción"
+          onIonChange={e => setDescription(e.detail.value!)}
+        />
+        <IonButton color='success' onClick={handleSubmit}><p className='text-sm m-2'>Agregar Zona</p></IonButton>
+      </div>
     </IonPage>
   );
 };

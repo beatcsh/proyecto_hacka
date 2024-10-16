@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.css';
 import { IonApp, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, IonIcon, IonLabel } from '@ionic/react';
 import { Route, Redirect } from 'react-router-dom';
 import { home, add } from 'ionicons/icons';
@@ -10,7 +11,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import '@ionic/react/css/core.css';
 
 const App: React.FC = () => (
-  <IonApp>
+  <IonApp className='bg-black'>
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
@@ -19,14 +20,12 @@ const App: React.FC = () => (
           <Redirect exact from="/" to="/home" />
         </IonRouterOutlet>
 
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="home" href="/home">
-            <IonIcon icon={home} />
-            <IonLabel>Ver Zonas</IonLabel>
+        <IonTabBar slot="bottom" className='h-[70px] flex justify-between place-items-center mx-auto space-x-8'>
+          <IonTabButton className='font-semibold' tab="home" href="/home">
+            <i className='bx bxs-home text-2xl text-white' ></i>
           </IonTabButton>
-          <IonTabButton tab="add-zone" href="/add-zone">
-            <IonIcon icon={add} />
-            <IonLabel>Agregar Zona</IonLabel>
+          <IonTabButton className='font-semibold' tab="add-zone" href="/add-zone">
+            <i className='bx bxs-location-plus text-2xl text-white'></i>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
