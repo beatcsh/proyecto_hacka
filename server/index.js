@@ -7,7 +7,7 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json())
 
 // Conexión a MongoDB
 mongoose.connect('mongodb://localhost:27017/tu_base_de_datos', {
@@ -60,11 +60,11 @@ app.listen(PORT, () => {
 // Agregar datos de prueba
 app.post('/add-zone', async (req, res) => {
   const newZone = new Zone({
-    dangerLevel: 'Alto',
-    description: 'Zona peligrosa debido a robos frecuentes',
+    dangerLevel: req.body.dangerLevel,
+    description: req.body.description,
     location: {
       type: 'Point',
-      coordinates: [-102.2549082, 21.921501], // Cambia esto a tus coordenadas
+      coordinates: req.body.location.coordinates,
     },
   });
 
