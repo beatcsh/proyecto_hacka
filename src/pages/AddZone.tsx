@@ -77,7 +77,7 @@ const AddZone: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-no-padding">
-        <div className='w-full h-[280px] p-2 bg-black'>
+        <div className='w-full h-[100%] p-2 bg-black'>
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
             zoom={13}
