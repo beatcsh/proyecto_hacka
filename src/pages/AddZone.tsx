@@ -14,13 +14,22 @@ const center = {
   lng: -102.2662378,
 };
 
+// Rutas de íconos personalizados para cada nivel de peligro
+const dangerIcons: { [key: string]: string } = {
+  low: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',      // Peligro bajo
+  medium: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',  // Peligro medio
+  high: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',       // Peligro alto
+  default: 'http://maps.google.com/mapfiles/ms/icons/red-pushpin.png' // Peligro predeterminado
+};
+
+
 const AddZone: React.FC = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '',
   });
 
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
-  const [dangerLevel, setDangerLevel] = useState<string>('');
+  const [dangerLevel, setDangerLevel] = useState<string>('low');
   const [description, setDescription] = useState<string>('');
 
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
@@ -55,6 +64,7 @@ const AddZone: React.FC = () => {
         if (!response.ok) {
           throw new Error('Error al agregar la zona');
         }
+
         // Reset form
         setDangerLevel('');
         setDescription('');
@@ -77,7 +87,7 @@ const AddZone: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-no-padding">
-        <div className='w-full h-[280px] p-2 bg-black'>
+        <div className='w-full h-[100%] p-2 bg-black'>
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
             zoom={13}
@@ -87,6 +97,8 @@ const AddZone: React.FC = () => {
             {selectedLocation && (
               <Marker
                 position={selectedLocation}
+                // Cambia el ícono según el nivel de peligro
+                icon={dangerIcons[dangerLevel] || dangerIcons.default}
               />
             )}
           </GoogleMap>
@@ -96,7 +108,7 @@ const AddZone: React.FC = () => {
         <IonInput
           className='border rounded-lg p-2 text-sm bg-black'
           value={dangerLevel}
-          placeholder="Nivel de Peligro"
+          placeholder="Nivel de Peligro (low, medium, high)"
           onIonChange={e => setDangerLevel(e.detail.value!)}
         />
         <IonInput
