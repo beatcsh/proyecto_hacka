@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
   "appName": "proyecto_hacka",
-  "webDir": "build",
+  "webDir": "dist",
   "bundledWebRuntime": false
 }
