@@ -4,9 +4,8 @@ import { IonButton, IonInput, IonPage, IonHeader, IonToolbar, IonTitle, IonConte
 
 const mapContainerStyle = {
   width: '100%',
-  height: '100%',
-  borderRadius: '10px',
-  backgroundColor: 'black'
+  height: '95%',
+  borderRadius: '10px'
 };
 
 const center = {
@@ -44,7 +43,7 @@ const AddZone: React.FC = () => {
       };
 
       try {
-        const response = await fetch('http://localhost:3000/add-zone', {
+        const response = await fetch('http://localhost:5000/add-zone', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -69,43 +68,44 @@ const AddZone: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle className='w-full h-[110px] m-3'>
-            <h1 className='p-4 text-2xl font-semibold'>Reportar Zona</h1>
-          </IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-no-padding">
-        <div className='w-full h-[100%] p-2 bg-black'>
-          <GoogleMap
-            mapContainerStyle={mapContainerStyle}
-            zoom={13}
-            center={center}
-            onClick={handleMapClick}
-          >
-            {selectedLocation && (
-              <Marker
-                position={selectedLocation}
-              />
-            )}
-          </GoogleMap>
-        </div>
-      </IonContent>
+      <div className='w-full h-[110px] m-3'>
+        <h1 className='p-4 text-2xl font-semibold'>Reportar Zona</h1>
+      </div>
+      <div className='w-full h-[100%] p-2 bg-fondogris'>
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+          zoom={13}
+          center={center}
+          onClick={handleMapClick}
+        >
+          {selectedLocation && (
+            <Marker
+              position={selectedLocation}
+            />
+          )}
+        </GoogleMap>
+      </div>
       <div className='grid place-items-center h-[210px]'>
-        <IonInput
-          className='border rounded-lg p-2 text-sm bg-black'
+        <select
+          onChange={e => setDangerLevel(e.target.value)}
           value={dangerLevel}
-          placeholder="Nivel de Peligro"
-          onIonChange={e => setDangerLevel(e.detail.value!)}
-        />
-        <IonInput
-          className='border rounded-lg p-2 text-sm bg-black'
-          value={description}
+          className="select select-bordered w-[60%] bg-fondogris m-1 max-w-xs"
+        >
+          <option disabled selected>Nivel de Peligro</option>
+          <option value="Low">Bajo</option>
+          <option value="Medium">Medio</option>
+          <option value="High">Alto</option>
+          <option value="Critical">Urgente</option>
+        </select>
+
+        <input
+          type="text"
           placeholder="Descripción"
-          onIonChange={e => setDescription(e.detail.value!)}
+          value={description}
+          onChange={e => setDescription(e.target.value)}
+          className="input input-bordered w-[60%] m-1 max-w-xs bg-fondogris text-white"
         />
-        <IonButton color='success' onClick={handleSubmit}><p className='text-sm m-2'>Agregar Zona</p></IonButton>
+        <button onClick={handleSubmit} className="btn bg-blue-800 text-white font-bold w-[60%] m-2">Agregar Zona</button>
       </div>
     </IonPage>
   );

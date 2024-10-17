@@ -1,10 +1,16 @@
-// tailwind.config.js
 module.exports = {
   content: [
     './src/**/*.{html,js,jsx,ts,tsx}', 
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        fondogris: '#1d252c',
+        titulos: '#a4acbc'
+      },
+    },
   },
-  plugins: [], 
+  plugins: [
+    require('daisyui'),
+  ],
 }

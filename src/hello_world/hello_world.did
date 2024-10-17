@@ -1,0 +1,8 @@
+service: () -> {
+    createUser: (text, text, text, text, text) -> (text);
+    getMessage: () -> (text) query;
+    getUsers: () -> (vec record {id:nat; username:text; telephone_emer:text; password:text; email:text; telephone:text}) query;
+    login: (text, text) -> (text) query;
+    setMessage: (text) -> ();
+    testMessage: () -> (text) query;
+}
