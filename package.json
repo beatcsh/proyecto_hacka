@@ -12,9 +12,9 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@capacitor/android": "6.1.2",
+    "@capacitor/android": "^6.1.2",
     "@capacitor/app": "6.0.1",
-    "@capacitor/core": "6.1.2",
+    "@capacitor/core": "^6.1.2",
     "@capacitor/geolocation": "^6.0.1",
     "@capacitor/haptics": "6.0.1",
     "@capacitor/ios": "6.1.2",
@@ -29,6 +29,7 @@
     "autoprefixer": "^10.4.20",
     "cordova": "^12.0.0",
     "cordova-plugin-sms": "^1.0.5",
+    "cordova-sms-plugin": "^1.0.4",
     "ionicons": "^7.0.0",
     "postcss": "^8.4.47",
     "react": "^18.2.0",

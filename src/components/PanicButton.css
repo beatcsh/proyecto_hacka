@@ -2,13 +2,30 @@
 
 /* Estilo para el botón de pánico */
 .panic-button {
-    margin: 20px; /* Añadir un margen alrededor del botón */
+  margin: 20px; /* Añadir un margen alrededor del botón */
+  background-color: #ff4c4c; /* Color de fondo rojo para el botón de pánico */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 15px 20px; /* Espaciado interno */
+  font-size: 18px; /* Tamaño de fuente */
+  font-weight: bold; /* Negrita para resaltar */
+  cursor: pointer; /* Cambiar el cursor al pasar el mouse */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para el botón */
+  transition: background-color 0.3s, transform 0.2s; /* Transición suave */
+}
+
+/* Cambiar el color de fondo y añadir efecto al pasar el mouse */
+.panic-button:hover {
+  background-color: #ff2a2a; /* Color más oscuro al pasar el mouse */
+  transform: translateY(-2px); /* Efecto de levantamiento */
+}
+
+/* Ajustes específicos para dispositivos móviles */
+@media (max-width: 768px) {
+  .panic-button {
+    margin: 10px; /* Ajustar el margen en pantallas más pequeñas */
+    font-size: 16px; /* Ajustar el tamaño de la fuente en móviles */
+    padding: 12px 16px; /* Espaciado interno más pequeño */
   }
-  
-  /* Ajustes específicos para dispositivos móviles */
-  @media (max-width: 768px) {
-    .panic-button {
-      margin: 10px; /* Ajustar el margen en pantallas más pequeñas */
-    }
-  }
-  
+}
