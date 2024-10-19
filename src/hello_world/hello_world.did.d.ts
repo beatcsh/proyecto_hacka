@@ -18,7 +18,19 @@ export interface _SERVICE {
       }
     >
   >,
-  'login' : ActorMethod<[string, string], string>,
+  'login' : ActorMethod<
+    [string, string],
+    Array<
+      {
+        'id' : bigint,
+        'username' : string,
+        'telephone_emer' : string,
+        'password' : string,
+        'email' : string,
+        'telephone' : string,
+      }
+    >
+  >,
   'setMessage' : ActorMethod<[string], undefined>,
   'testMessage' : ActorMethod<[], string>,
 }

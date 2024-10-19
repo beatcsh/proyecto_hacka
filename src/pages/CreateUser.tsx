@@ -39,7 +39,7 @@ const CreateUser: React.FC = () => {
             <div className="h-[100vh] bg-fondogris flex flex-col justify-center place-items-center w-full space-y-6">
                 <div className="avatar">
                     <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3VoQ1wFuU_Y5XobaGUgkDS1ktWwEx3YeEdw&s" alt="Avatar" />
+                        <img src="../assets/logo.png" alt="Avatar" />
                     </div>
                 </div>
                 <input

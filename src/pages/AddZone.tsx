@@ -22,6 +22,14 @@ const AddZone: React.FC = () => {
   const [dangerLevel, setDangerLevel] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
+  // Rutas de íconos personalizados para cada nivel de peligro
+  const dangerIcons: { [key: string]: string } = {
+    low: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',      // Peligro bajo
+    medium: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',  // Peligro medio
+    high: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',       // Peligro alto
+    default: 'http://maps.google.com/mapfiles/ms/icons/red-pushpin.png' // Peligro predeterminado
+  };
+
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
     if (event.latLng) {
       setSelectedLocation({
@@ -92,10 +100,9 @@ const AddZone: React.FC = () => {
           className="select select-bordered w-[60%] bg-fondogris m-1 max-w-xs"
         >
           <option disabled selected>Nivel de Peligro</option>
-          <option value="Low">Bajo</option>
-          <option value="Medium">Medio</option>
-          <option value="High">Alto</option>
-          <option value="Critical">Urgente</option>
+          <option value="low">Bajo</option>
+          <option value="medium">Medio</option>
+          <option value="high">Alto</option>
         </select>
 
         <input

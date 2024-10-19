@@ -19,11 +19,16 @@ const Login: React.FC = () => {
 
             // Llama al método de login pasando los parámetros
             const result = await userActor.login(username, password);
-            setMessage(result); // Almacena el mensaje devuelto
 
-            // Redirige a /home si el login es exitoso
-            if (result === 'Inicio de sesión exitoso') {
+            // Manejar el resultado
+            if (result.length > 0) {
+                const userInfo = result[0]; // Supongamos que el primer elemento contiene los datos del usuario
+                setMessage(`Inicio de sesión exitoso: ${userInfo.username}`); // Ajusta según la estructura de userInfo
+                // Redirige a /home si el login es exitoso
                 history.push('/home');
+            } else {
+                // Si el vector está vacío, significa que hubo un error en el inicio de sesión
+                setMessage('Nombre de usuario o contraseña incorrectos');
             }
         } catch (error) {
             console.error('Error al iniciar sesión:', error);
@@ -37,7 +42,7 @@ const Login: React.FC = () => {
                 <div className="grid place-items-center space-y-6">
                     <div className="avatar">
                         <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3VoQ1wFuU_Y5XobaGUgkDS1ktWwEx3YeEdw&s" alt="Avatar" />
+                            <img src="../assets/logo.png" alt="Avatar" />
                         </div>
                     </div>
                     <p className="text-xl">Bienvenido una vez más</p>
@@ -62,9 +67,9 @@ const Login: React.FC = () => {
                 >
                     Iniciar Sesión
                 </button>
-                <button className="btn bg-gray-200 text-gray-700 font-bold w-[80%]">
+                <a href='/createUser' className="btn bg-gray-200 text-gray-700 font-bold w-[80%]">
                     Crear Cuenta
-                </button>
+                </a>
                 {message && <p className="text-green-600">{message}</p>} {/* Muestra el mensaje */}
             </div>
         </>
